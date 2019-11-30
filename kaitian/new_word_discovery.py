@@ -9,6 +9,7 @@ import pandas as pd
 import codecs
 import numpy as np
 import logging
+import pickle
 
 from kaitian.transformer.transformer_new_word_candidate import get_or_create
 
@@ -197,20 +198,6 @@ class DocumentSegment(object):
         return sorted(values, key=lambda v: len(v.text), reverse=False)
 
 
-def load_words(filename):
-    max_len = 0
-    f = open(filename, encoding='utf-8')
-    objects = json.load(f)
-    words = []
-    if objects is not None and len(objects) > 0:
-        for word in objects:
-            words.append(word['more'])
-            if(len(word['word'])) > max_len:
-                max_len = len(word['word'])
-    return words, max_len
-
-
-
 def load_dictionary(config_path, encoding="utf-8"):
     """
     Load dict
@@ -223,6 +210,34 @@ def load_dictionary(config_path, encoding="utf-8"):
         str = file.read()
         config = json.loads(str)
         return config
+
+
+def load_pku_dic(dicfile, dic=None, added_word_dict: dict = None):
+    """
+    导入字典
+    :param dicfile:
+    :param dic:
+    :param added_word_dict:
+    :return:
+    """
+    from math import log
+    if added_word_dict is None:
+        added_word_dict = {}
+    count = 0
+
+    word_dict = []
+
+    with open(dicfile, "rb") as f:
+        all_words = pickle.load(f).strip().lower().split("\n")
+
+    for word in all_words:
+        if len(word) > 1:
+            if word not in added_word_dict:
+                word_dict.append(word)
+                added_word_dict[word] = word
+                count += 1
+    print(count)
+    return word_dict
 
 
 def load_model(model_name, show_summary=False):
@@ -290,9 +305,8 @@ if __name__ == '__main__':
 
     # 加载字典
     dict_bank = []
-    dict_path = path + '/dict/dict.txt'
-    # for i in codecs.open(dict_path, 'r', "utf-8"):
-    #     dict_bank.append(i.split(' ')[0])
+    dict_path = path + '/dict/default.pkl'
+    dict_bank = load_pku_dic(dict_path)
     logging.debug("Loading dictionary.")
 
     # 加载文档
@@ -328,7 +342,8 @@ if __name__ == '__main__':
     wordlist = []
     for ii in words:
         if ii[0] not in dict_bank:
-            word_candidate.append(ii[0])
+            if scores[index] >= 0.5:
+                word_candidate.append(ii[0])
             wordlist.append([ii[0], ii[1], ii[2], ii[3], ii[4], scores[index]])
         index += 1
 
@@ -343,8 +358,15 @@ if __name__ == '__main__':
     seg = pd.DataFrame(wordlist, columns=['word', 'len', 'frequency', 'pmi', 'entropy', 'score'])
     seg.to_csv(path + '/output/extractword.csv', index=False, encoding="utf-8")
 
-    # intersection = set(word_candidate) & set(dict_bank)
-    # newwordset = set(word_candidate) - intersection
+    words = []
+    for word in wordlist:
+        w = word[0]
+        if word[5] > 0.5:
+            words.append(w)
+
+    intersection = set(word_candidate) & set(dict_bank)
+    newwordset = set(word_candidate) - intersection
+    print(words)
 
     endtime = time.clock()
     logging.debug('Times: ' + str(endtime - starttime))

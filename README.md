@@ -99,6 +99,7 @@ Word,Length,Frequency,PMI,Entropy,Score
 
 排到了468位，而在信息熵+凝合程度，排在301，经过分析，在MSR中，存在“争取经济稳定发展”，学到f(争取) = 1, 而 f(争取经) = 0，所以把 f(取经) 打的分数较低。
 
+f() 算法在不断优化中......
  
 ## 3 参考
 -[1] [互联网时代的社会语言学：基于SNS的文本数据挖掘](http://www.matrix67.com/blog/archives/5044)

@@ -102,12 +102,12 @@ Word,Length,Frequency,PMI,Entropy,Score
 f() 算法在不断优化中......
  
 ## 3 参考
--[1] [互联网时代的社会语言学：基于SNS的文本数据挖掘](http://www.matrix67.com/blog/archives/5044)
--[2] [新词发现的信息熵方法与实现](https://kexue.fm/archives/3491)
--[3] [Chinese word segmentation algorithm without corpus（无需语料库的中文分词） ](https://github.com/Moonshile/ChineseWordSegmentation)
--[4] [新词发现算法(NewWordDetection) ](https://github.com/xylander23/New-Word-Detection)
--[5] ["新词发现"算法探讨与优化](https://zhuanlan.zhihu.com/p/80385615)
--[6] [kpot/keras-transformer](https://github.com/kpot/keras-transformer)
--[7] [GlassyWing/transformer-word-segmenter](https://github.com/GlassyWing/transformer-word-segmenter)
+- [1] [互联网时代的社会语言学：基于SNS的文本数据挖掘](http://www.matrix67.com/blog/archives/5044)
+- [2] [新词发现的信息熵方法与实现](https://kexue.fm/archives/3491)
+- [3] [Chinese word segmentation algorithm without corpus（无需语料库的中文分词） ](https://github.com/Moonshile/ChineseWordSegmentation)
+- [4] [新词发现算法(NewWordDetection) ](https://github.com/xylander23/New-Word-Detection)
+- [5] ["新词发现"算法探讨与优化](https://zhuanlan.zhihu.com/p/80385615)
+- [6] [kpot/keras-transformer](https://github.com/kpot/keras-transformer)
+- [7] [GlassyWing/transformer-word-segmenter](https://github.com/GlassyWing/transformer-word-segmenter)
 
 
